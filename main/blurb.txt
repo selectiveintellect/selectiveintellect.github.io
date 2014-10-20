@@ -1,0 +1,177 @@
+COMPANY:
+
+- Motto:
+
+At Selective Intellect, we use heuristic programming methods to optimize and
+deliver packaged solutions that provide "Eureka!" moments not just to you, but
+to our development team as well. When we deliver, we deliver the best there
+is, and offer solutions perfectly aligned to your needs.
+
+- What we do and what are we best at or what do we offer.
+
+Solving challenging problems in software is our forte. Designing and efficiently
+implementing complex algorithms in software is the core of our services business.
+We focus
+on optimizing quality, cost and time to implement solutions for our
+customers. We happily take on projects that are incomplete and complete them to
+our customers' satisfaction. 
+
+Our expertise lies in areas of high performance computing, data extraction and
+consolidation, and computational algorithms in the fields of science,
+engineering and finance. Our developers have extensive experience in various
+operating systems such as Microsoft Windows, Linux and other Unix variants. 
+
+* HIGH PERFORMANCE COMPUTING
+We possess knowledge and experience in parallelization of applications at the
+algorithmic level, and also distributing applications on a grid or cluster of
+computers. With the advent of multi-core computers, accelerating the
+performance of an application by leveraging parallel programming is a skillset
+we have and share with our customers on both at the design and implementation
+levels. We incorporate state-of-the-art, academically researched algorithms,
+create our own or innovate by improvising on existing ones. Our usage of
+industry standard parallelization APIs like that of MPI, PVM and OpenMP will
+help you take advantage of cheaper hardware of today to extract that extra
+drop of performance from your investment.
+
+Our expertise in cross-platform computing in languages such as C and C++, not
+only enables us to improve performance in applications by keeping in mind the
+quirks fo each operating system but also design APIs that are identical for
+all platforms to make life easier for the developers.
+
+If the need arises, we also perform modifications in operating systems such as
+Linux, and many other open source applications so as to extract maximum
+performance out of them. We also provide customized versions of Debian and
+Ubuntu Linux distributions specially designed for high performance computing
+applications.
+
+* DATA EXTRACTION SERVICES
+
+At Selective Intellect, data is indeed our business. Our novel methods of
+capturing, consolidating, integrating and analysing data aid our customers to
+improve their efficiency and profit, by providing them tools and algorithms to
+extract data and analyze them easily. We specialize in writing
+context-sensitive web crawlers to retrieve data from various available
+structured and unstructured content on the web. This consolidated contextual
+data helps our customers, to not only broaden the applicability of the data and
+its analyses to their existing systems, but also to improve and design new and
+special purpose systems and products for specific domains.
+
+* DATA EXTRACTION TOOLS
+
+Data capture, integration and analysis are quickly becoming the mainstay of a
+large number of businesses.
+With the explosion of information on the internet, there has been considerable
+interest in consolidating the data into specialized structured forms for
+solving complex user problems and extensive analysis. The web is replete with
+structured, semi-structured and unstructured data in various forms such as
+text-based data, image-based data, websites, forums, blogs, Web 2.0
+communities, instant messaging systems and enterprise intranets. Extracting
+structured information from text, software logs and crawls of websites to
+decipher the interplay of structured and unstructured data are in progress. 
+
+However, it gets very difficult and time consuming to write custom new tools
+each time to aggregate data from various websites and data sources. Moreover,
+with the changing face of websites and other data sources over time,
+maintenance of such tools and their respective algorithms and patterns for
+each website and/or data source can quickly become a mammoth task.
+
+To overcome this problem, we at Selective Intellect, provide a "content and
+context"-sensitive web crawler which can perform intelligent data extraction,
+i.e. can understand what kind of content it is
+looking for, figures out on its own what to extract, and can derive relationships 
+between different pieces of data. It
+can filter useful from the useless content and can handle changes in webpage
+designs seamlessly. It uses natural language parsing to decipher the content
+and creates complex relationship graphs which it uses to create a useful
+structure from data. The crawling technology can not only parse text in
+websites in the form of HTML, but also parse text present in text documents and
+PDF files. It essentially replaces your data entry personnel by automating
+their jobs to a great extent. It is capable of performing periodic crawls on
+websites and can even masquerade as a real user by automatically logging into
+websites where content exists behind login screens.
+
+As a user of the product, all you have to do is tell the crawler when and what
+to look for on the web, and sit back and relax while the crawler figures out
+and returns with structured and formatted data in a format of your choice. Our
+crawlers not only are high speed, but also can be distributed over a cluster
+of computers to take advantage of excess hardware resources.
+
+
+
+
+
+
+This structure that is created can further be analyzed by
+other software programs or can be directly viewed by user using visualization
+tools.
+- About us
+
+- Contact us
+
+- Products
+
+PARANG:
+The market place for scalable parallel processing architectures has changed a
+lot in the last decade, thus creating a need for software that maximizes the
+availability of such hardware. It is important to understand what problems can
+and cannot be solved using parallelization, as algorithms might have dependent
+portions that do not always lend themselves to parallelization. In contrast,
+embarassingly parallel problems such as Monte Carlo simulations, which are
+indispensible techniques for modeling and simulation in today's research world,
+tend to extract maximum use out of such hardware.
+
+Techniques such as Monte Carlo simulations and in the field of cryptography such
+as cryptanalysis, which heavily use random number
+generators (RNGs), which are not parallel by nature. Hence the need for parallel
+(capable of executing on multiple processor threads/processes simultaneously
+without coherence) and scalable (capable of running on variable number of
+processors, running in thousands, without coherence). The danger of coherence
+can occur in RNGs, where stochastic models generate results with high degrees of
+periodic correlation between sections of output, thus reducing multiple runs to
+replications of small number of runs. This can effectively reduce the number of
+trials to just one in the worst case, and can be more dangerous since coherence
+might not be noticed due to high dimensionality of the problem.
+
+Despite some research having been done in parallel RNGs (such as the free SPRNG),
+none appear to support various parallel architectures,
+processor architectures and size, are not universally scalable or distributed.
+
+Presenting PARANG, an easy to use PArallel RAndom Number Generator, which not
+only scales well with thousands of processors but also supports various parallel
+programming paradigms such as MPI, PVM, IPC, sockets, threads, and GPGPU such as
+NVIDIA's CUDA. PARANG is a library that can be embedded in your source code, and
+provides a simple to use API that can support every supported parallel paradigm
+without having to change anything. Whether your programs use MPI or PVM or CUDA
+or threads, the API stays the same and the developer can easily use PARANG
+without having to modify code for each paradigm. 
+
+PARANG also supports "BigNums" or very large integers and real numbers out of
+the box by default and handles them automatically. 
+
+PARANG is not just one style of random number generation. It supports various
+algorithms of random number generation, such as, various linear congruential
+generators, multiplicative linear congruential generators, combined multiple
+recursive generators, various lagged Fibonacci generators, and other non-uniform
+deviate based RNGs. PARANG also can perform quasi random number generation using
+algorithms based on Mersenne Twister, Sobol, Box-Mueller and Halton sequences.
+ These can be selected at runtime via a simple runtime switch
+in the API. PARANG also provides various tests for the user to test the library
+and analyse the performance and quality of the random number generation, to
+ensure the integrity of the random number generation, and prevent the
+inadvertent coherence between multiprocessing threads. These include statistical
+tests such as chi-square testing, frequency testing, correlation and
+autocorrelation testing, and standard RNG tests such as the DIEHARD and NIST
+suite of tests.
+
+PARANG also provides API hooks for the user to incorporate their own
+custom distribution paradigm if they would like to roll their own MPI, PVM,
+threads or socket based distribution.
+
+We offer PARANG in the form of compiled binaries for Microsoft Windows, Linux
+and Mac OS X, and also for the corresponding parallel programming paradigm such
+as MPI, PVM, and NVIDIA's CUDA.
+
+We also license the complete source code of PARANG for users who want complete
+compilation control over their software for additional charge. Technical support
+is provided with this package.
+
