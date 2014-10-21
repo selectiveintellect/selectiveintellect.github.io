@@ -52,11 +52,11 @@
                         Parallel Solution Engine (or PARASOL&trade;) is an
                         <em style="color:yellow;">operating system agnostic</em> middleware
                         framework to enable users to easily leverage
-                        <strong style="color:yellow;">heterogeneous</strong> systems with GPUs and CPUs to achieve
+                        <a href="#/hetero"><strong>heterogeneous</strong></a> systems with GPUs and CPUs to achieve
                         efficient parallelization of their algorithms.
 					</p>
 				</section>
-                <section>
+                <section id="hetero">
                 <h2>What is a Heterogeneous Cluster ?</h2>
                 <p>A combination of various types of systems</p>
                 <a href="images/cluster.png" target="_blank" class="image"><img
@@ -74,7 +74,7 @@
                     <li>Abstract communications and events handling</li>
                     <li>Allow mixing of systems with different compute devices</li>
                     <li>Allow dynamic creation of a cluster</li>
-                    <li>Perform intelligent workload distribution</li>
+                    <li>Perform <a href="#/workbal">intelligent workload distribution</a></li>
                 </ul>
                 </section>
                 <section>
@@ -94,9 +94,11 @@
                     <h2>PARASOL&trade; Implements</h2>
                 <br/>
                     <ul>
-                        <li>Communications between <strong style="color:yellow;">heterogeneous</strong> systems</li>
-                        <li>Fault tolerance</li>
-                        <li>Intelligent Workload balancing</li>
+                        <li>Communications between <a
+                            href="#/hetero"><strong>heterogeneous</strong></a> systems</li>
+                        <li><a href="#/fault">Fault tolerance</a></li>
+                        <li><a href="#/workbal">Intelligent Workload balancing</a></li>
+                        <li><a href="#/elastic"><em>Elastic</em> Cluster Creation</a></li>
                     </ul>
                 </section>
                 <section>
@@ -114,10 +116,12 @@
                 <p>PARASOL&trade; will</p>
                 <br/>
                 <ul>
-                    <li>Maximize the available resources provided</li>
-                    <li>Perform workload balancing and fault tolerance</li>
+                    <li>Maximize and manage the available resources provided</li>
+                    <li>Perform <a href="#/workbal">workload balancing</a> and
+                    <a href="#/fault">fault tolerance</a></li>
                     <li>Work with existing HPC clusters that use MPI</li>
                     <li>Allow mixing of old and new servers to form a cluster</li>
+                    <li><a href="#/elastic"><em>Elastic</em> Cluster Creation</a></li>
                 </ul>
                 </section>
                 <section>
@@ -142,7 +146,7 @@
                     <li>Field Programmable Gate Array (FPGA) cards</li>
                 </ul>
                 </section>
-                <section>
+                <section id="workbal">
                 <h2>Intelligent Workload Balancing</h2>
                 <br/><p>
                 PARASOL&trade; solves this common problem by:</p>
@@ -155,7 +159,7 @@
                     <li>Automatic adjusting of workload based on performance</li>
                 </ul>
                 </section>
-                <section>
+                <section id="fault">
                 <h2>Fault Tolerance</h2>
                 <br/><p>
                 PARASOL&trade; handles this common problem by:</p>
@@ -165,6 +169,19 @@
                     <li>Reliable detection of process failure</li>
                     <li>Restart logic for failed processes</li>
                     <li>Rebalancing of workload for failed systems</li>
+                </ul>
+                </section>
+                <section id="elastic">
+                <h2><em>Elastic</em> Cluster Creation</h2>
+                <br/>
+                <p>A special feature of PARASOL&trade; where:</p>
+                <br/>
+                <ul>
+                    <li>Application can add more compute workers
+                    <strong style="color:yellow;">on-the-fly</strong>
+                    </li>
+                    <li>Shut down unused workers</li>
+                    <li>Manage resource utilization effectively</li>
                 </ul>
                 </section>
                 <section>
@@ -182,7 +199,7 @@
                     <h2>Supported Operating Systems</h2>
                     <br/>
                     <p>PARASOL&trade; is <em style="color:yellow;">operating system agnostic</em>
-                    and supports a cluster of <strong style="color:yellow;">heterogeneous</strong>
+                    and supports a cluster of <a href="#/hetero"><strong>heterogeneous</strong></a>
                     systems running the following:</p>
                     <br/>
                     <ul>
