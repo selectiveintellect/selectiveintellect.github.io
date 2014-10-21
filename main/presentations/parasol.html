@@ -34,7 +34,7 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section>
+				<section data-autoslide="5000">
 					<h1>PARASOL&trade;</h1>
 					<h3>A Parallel Solution Engine for HPC</h3>
 					<p>
@@ -56,7 +56,7 @@
                         efficient parallelization of their algorithms.
 					</p>
 				</section>
-                <section id="hetero">
+                <section id="hetero" data-autoslide="3000">
                 <h2>What is a Heterogeneous Cluster ?</h2>
                 <p>A combination of various types of systems</p>
                 <a href="images/cluster.png" target="_blank" class="image"><img
@@ -64,7 +64,7 @@
                 <br/>
                 <em class="fragment"><small>Click to enlarge the picture</small></em>
                 </section>
-                <section>
+                <section data-autoslide="5000">
                 <h2>Why Use PARASOL&trade; ?</h2>
                 </section>
                 <section>
@@ -112,7 +112,7 @@
                         <li>Custom domain decomposition algorithms</li>
                     </ul>
                 </section>
-                <section>
+                <section data-autoslide="10000">
                 <h2>For System Administrators</h2>
                 <br/>
                 <p>PARASOL&trade; will</p>
@@ -148,7 +148,7 @@
                     <li>Field Programmable Gate Array (FPGA) cards</li>
                 </ul>
                 </section>
-                <section id="workbal">
+                <section id="workbal" data-autoslide="10000">
                 <h2>Intelligent Workload Balancing</h2>
                 <br/><p>
                 PARASOL&trade; solves this common problem by:</p>
@@ -161,7 +161,7 @@
                     <li>Automatic adjusting of workload based on performance</li>
                 </ul>
                 </section>
-                <section id="fault">
+                <section id="fault" data-autoslide="10000">
                 <h2>Fault Tolerance</h2>
                 <br/><p>
                 PARASOL&trade; handles this common problem by:</p>
@@ -173,7 +173,7 @@
                     <li>Rebalancing of workload for failed systems</li>
                 </ul>
                 </section>
-                <section id="elastic">
+                <section id="elastic" data-autoslide="10000">
                 <h2><em>Elastic</em> Cluster Creation</h2>
                 <br/>
                 <p>A special feature of PARASOL&trade; where:</p>
@@ -240,6 +240,7 @@
 				progress: true,
 				history: true,
 				center: true,
+                autoSlide: 7000,
                 loop: true,
 				transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
 				dependencies: [
