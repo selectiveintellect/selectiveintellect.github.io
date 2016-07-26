@@ -1,5 +1,7 @@
 # How to use [CMake](http://www.cmake.org) to Build Third party libraries
 
+_TAGS_: high performance computing, HPC, cmake, Thread Building Blocks, tbb
+
 CMake is an excellent cross-platform build tool for automatically generating
 Unix `Makefiles`, Windows `NMake Makefiles`, Microsoft Visual Studio&reg;
 Solution projects or Apple Xcode&reg; projects for MacOS. It has its own domain specific
