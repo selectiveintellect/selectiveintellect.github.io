@@ -13,10 +13,10 @@ my $grammar = <<EOF;
 hosts: host | blanks | comments
 comments: /- HASH ANY* EOL/
 blanks: /- EOL/
-host: ip - names /- EOL?/
+host: ip - aliases /- EOL?/
 ip: ipv4 | ipv6
-names: name+
-name: - /((: WORD | DOT | DASH )+)/ -
+aliases: alias+
+alias: - /( ALNUM (: WORD | DOT | DASH )*)/ -
 
 ipv4: /((: DIGIT{1,3} DOT ){3} DIGIT{1,3} )/
 ipv6: /((: HEX* COLON{1,2} HEX* )+ )/

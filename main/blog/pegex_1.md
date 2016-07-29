@@ -26,7 +26,7 @@ addition to the default entries for the `localhost` which is named `debian`.
 
 We want to parse this file using `Pegex` and convert each line into a native
 Perl hash with the appropriate keys defining whether the address is IPv4 or IPv6
-and what the host names are and their respective IP addresses. We can do this
+and what the host aliases are and their respective IP addresses. We can do this
 without using any `split` functions or manually writing any regular expressions !
 
 
@@ -58,10 +58,10 @@ The grammar is a collection of rules and looks like below:
     hosts: host | blanks | comments
     comments: /- HASH ANY* EOL/
     blanks: /- EOL/
-    host: ip - names /- EOL?/
+    host: ip - aliases /- EOL?/
     ip: ipv4 | ipv6
-    names: name+
-    name: - /((: WORD | DOT | DASH )+)/ -
+    aliases: alias+
+    alias: - /(ALNUM (: WORD | DOT | DASH )*)/ -
 
     ipv4: /((: DIGIT{1,3} DOT ){3} DIGIT{1,3} )/
     ipv6: /((: HEX* COLON{1,2} HEX* )+ )/
@@ -89,14 +89,31 @@ describes numbers in the hexadecimal format, and `ANY` represents any character
 except newline. The `WORD` represents the regular expression `\w`, `DOT` and
 `DASH` represent the `.` and `-` characters, respectively.
 
-Detailed descriptions of all the available shorthands or _atoms_ are available at
-[Pegex::Grammar::Atoms](https://raw.githubusercontent.com/ingydotnet/pegex-pm/master/lib/Pegex/Grammar/Atoms.pm)
-
 Rules enclosed in `//` define a specific regular expression that will be
 generated, and are useful for creating the low-level rules using the _atoms_.
 
+Detailed descriptions of all the available _atoms_ are available at
+[Pegex::Grammar::Atoms](https://raw.githubusercontent.com/ingydotnet/pegex-pm/master/lib/Pegex/Grammar/Atoms.pm)
+
 High-level rules are a collection of other rules separated using the `|` (OR)
 operation or the default AND operation. 
+
+Let's try to understand the `ipv4` rule. Like a standard regular expression
+capture we are trying to capture the IPv4 address on each line of the input. We
+do that by enclosing the items to be captured in parentheses. An IPv4 address is
+in the format `xxx.xxx.xxx.xxx` where `xxx` is a number between `0` and `255`.
+So we need to capture a three digit number, hence we use `DIGIT{1,3}`, followed
+by a `.`, and this pattern repeats three times followed by another three digit
+number. Hence we have the `DIGIT{1,3} DOT` followed by a `{3}` and another `DIGIT{1,3}`.
+
+Similarly, the rule for parsing IPv6 addresses can be implemented since it is
+one or more hexadecimal numbers separated by a `::`. The alias of the IPv4 or
+IPv6 address is given by the `alias` rule. The alias can have any alphanumeric
+characters and the characters `_`, `-` and `.`. The alphanumeric characters and
+`_` can be represented by the _atom_ `WORD` which translates to `\w`. We then
+use the `|` operator to say that the name can have any of these characters and
+has to start with an alphanumeric character, hence we start it with `ALNUM`.
+
 
 ## Executing the Grammar
 
@@ -135,10 +152,10 @@ my $grammar = &lt;&lt;EOF;
 hosts: host | blanks | comments
 comments: /- HASH ANY* EOL/
 blanks: /- EOL/
-host: ip - names /- EOL?/
+host: ip - aliases /- EOL?/
 ip: ipv4 | ipv6
-names: name+
-name: - /((: WORD | DOT | DASH )+)/ -
+aliases: alias+
+alias: - /(ALNUM (: WORD | DOT | DASH )*)/ -
 
 ipv4: /((: DIGIT{1,3} DOT ){3} DIGIT{1,3} )/
 ipv6: /((: HEX* COLON{1,2} HEX* )+ )/
@@ -169,31 +186,31 @@ $ perl etchosts.pl etchosts_sample
     host:
       - ip:
           ipv4: 127.0.0.1
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - localhost
 - hosts:
     host:
       - ip:
           ipv4: 127.0.1.1
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - debian.selectiveintellect.local
-          - name:
+          - alias:
               - debian
 - hosts:
     host:
       - ip:
           ipv4: 192.168.1.1
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - router
 - hosts:
     host:
       - ip:
           ipv4: 192.168.1.3
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - ubuntuserver
 - hosts: []
 - hosts: []
@@ -201,38 +218,38 @@ $ perl etchosts.pl etchosts_sample
     host:
       - ip:
           ipv6: ::1
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - ip6-localhost
-          - name:
+          - alias:
               - ip6-loopback
 - hosts:
     host:
       - ip:
           ipv6: fe00::0
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - ip6-localnet
 - hosts:
     host:
       - ip:
           ipv6: ff00::0
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - ip6-mcastprefix
 - hosts:
     host:
       - ip:
           ipv6: ff02::1
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - ip6-allnodes
 - hosts:
     host:
       - ip:
           ipv6: ff02::2
-      - names:
-          - name:
+      - aliases:
+          - alias:
               - ip6-allrouters
 ...
 </code></pre>
