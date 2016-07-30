@@ -21,8 +21,8 @@ automatically **without** having to manually create any object.
 ## The `/etc/hosts` file
 
 Let's take a look at a typical `/etc/hosts` file on a Linux system. The below
-file has some manually entered entries for `router` and `ubuntuserver` in
-addition to the default entries for the `localhost` which is named `debian`.
+file has some manually entered entries for `myrouter` and `myserver` in
+addition to the default entries for the `localhost` which is named `mydesktop`.
 
 We want to parse this file using `Pegex` and convert each line into a native
 Perl hash with the appropriate keys defining whether the address is IPv4 or IPv6
@@ -31,9 +31,9 @@ without using any `split` functions or manually writing any regular expressions 
 
 
     127.0.0.1	localhost
-    127.0.1.1	debian.example.local	debian
-    192.168.1.1 router 
-    192.168.1.3 ubuntuserver
+    127.0.1.1	mydesktop.example.local	mydesktop
+    192.168.1.1 myrouter 
+    192.168.1.3 myserver
     # this is a comment and below is a blank line
 
     # The following lines are desirable for IPv6 capable hosts
@@ -41,7 +41,7 @@ without using any `split` functions or manually writing any regular expressions 
     fe00::0 ip6-localnet
     ff00::0 ip6-mcastprefix
     ff02::1 ip6-allnodes
-    ff02::2 ip6-allrouters
+    ff02::2 ip6-allmyrouters
 
 
 ## Writing the Grammar
@@ -143,7 +143,7 @@ use warnings;
 use 5.10.0;
 use feature 'say';
 use Pegex;
-use Data::Dumper;
+use YYY;
 
 my $grammar = &lt;&lt;EOF;
 %grammar etchosts
@@ -166,8 +166,7 @@ my @rows = ();
 while (&lt;&gt;) {
     push @rows, pegex($grammar)-&gt;parse($_);
 }
-$Data::Dumper::Indent = 0;
-say Dumper(\@rows);
+YYY \@rows;
 
 </code></pre>
 
@@ -195,23 +194,23 @@ $ perl etchosts.pl etchosts_sample
           ipv4: 127.0.1.1
       - aliases:
           - alias:
-              - debian.selectiveintellect.local
+              - mydesktop.selectiveintellect.local
           - alias:
-              - debian
+              - mydesktop
 - hosts:
     host:
       - ip:
           ipv4: 192.168.1.1
       - aliases:
           - alias:
-              - router
+              - myrouter
 - hosts:
     host:
       - ip:
           ipv4: 192.168.1.3
       - aliases:
           - alias:
-              - ubuntuserver
+              - myserver
 - hosts: []
 - hosts: []
 - hosts:
@@ -250,6 +249,6 @@ $ perl etchosts.pl etchosts_sample
           ipv6: ff02::2
       - aliases:
           - alias:
-              - ip6-allrouters
+              - ip6-allmyrouters
 ...
 </code></pre>
