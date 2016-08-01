@@ -132,6 +132,7 @@ samples so that we can test the GPUs.
     ## setup the linker for use by everyone 
     $ echo /usr/local/cuda-6.5/lib64 > /etc/ld.so.conf.d/cuda_ld.conf
     $ ldconfig
+    $ ln -s /usr/local/cuda-6.5 /usr/local/cuda
 
     ## run the sample install binary
     $ ./cuda-samples-linux-6.5.14-18745345.run -noprompt\
@@ -140,7 +141,7 @@ samples so that we can test the GPUs.
     ## build the samples
     $ cd /usr/local/cuda-6.5/samples
     $ GCC=g++-4.8 EXTRA_NVCCFLAGS="-D_FORCE_INLINES" make -j4
-    
+
 
 5. At this stage we have now successfully installed and built the CUDA software
 and the NVIDIA drivers. So let's reboot the system.
@@ -149,18 +150,234 @@ and the NVIDIA drivers. So let's reboot the system.
 regular user and run `lspci` to make sure that the NVIDIA host cards and the
 GPUs are detected.
 
-    ##TODO: insert output of lspci
+    $ lspci
+    00:00.0 Host bridge: Intel Corporation 5000X Chipset Memory Controller Hub (rev 12)
+    00:02.0 PCI bridge: Intel Corporation 5000 Series Chipset PCI Express x4 Port 2 (rev 12)
+    00:03.0 PCI bridge: Intel Corporation 5000 Series Chipset PCI Express x4 Port 3 (rev 12)
+    00:04.0 PCI bridge: Intel Corporation 5000 Series Chipset PCI Express x8 Port 4-5 (rev 12)
+    00:05.0 PCI bridge: Intel Corporation 5000 Series Chipset PCI Express x4 Port 5 (rev 12)
+    00:06.0 PCI bridge: Intel Corporation 5000 Series Chipset PCI Express x8 Port 6-7 (rev 12)
+    00:07.0 PCI bridge: Intel Corporation 5000 Series Chipset PCI Express x4 Port 7 (rev 12)
+    00:10.0 Host bridge: Intel Corporation 5000 Series Chipset FSB Registers (rev 12)
+    00:10.1 Host bridge: Intel Corporation 5000 Series Chipset FSB Registers (rev 12)
+    00:10.2 Host bridge: Intel Corporation 5000 Series Chipset FSB Registers (rev 12)
+    00:11.0 Host bridge: Intel Corporation 5000 Series Chipset Reserved Registers (rev 12)
+    00:13.0 Host bridge: Intel Corporation 5000 Series Chipset Reserved Registers (rev 12)
+    00:15.0 Host bridge: Intel Corporation 5000 Series Chipset FBD Registers (rev 12)
+    00:16.0 Host bridge: Intel Corporation 5000 Series Chipset FBD Registers (rev 12)
+    00:1c.0 PCI bridge: Intel Corporation 631xESB/632xESB/3100 Chipset PCI Express Root Port 1 (rev 09)
+    00:1d.0 USB controller: Intel Corporation 631xESB/632xESB/3100 Chipset UHCI USB Controller #1 (rev 09)
+    00:1d.1 USB controller: Intel Corporation 631xESB/632xESB/3100 Chipset UHCI USB Controller #2 (rev 09)
+    00:1d.2 USB controller: Intel Corporation 631xESB/632xESB/3100 Chipset UHCI USB Controller #3 (rev 09)
+    00:1d.3 USB controller: Intel Corporation 631xESB/632xESB/3100 Chipset UHCI USB Controller #4 (rev 09)
+    00:1d.7 USB controller: Intel Corporation 631xESB/632xESB/3100 Chipset EHCI USB2 Controller (rev 09)
+    00:1e.0 PCI bridge: Intel Corporation 82801 PCI Bridge (rev d9)
+    00:1f.0 ISA bridge: Intel Corporation 631xESB/632xESB/3100 Chipset LPC Interface Controller (rev 09)
+    01:00.0 SCSI storage controller: LSI Logic / Symbios Logic SAS1068E PCI-Express Fusion-MPT SAS (rev 08)
+    02:00.0 PCI bridge: Broadcom EPB PCI-Express to PCI-X Bridge (rev c3)
+    03:00.0 Ethernet controller: Broadcom Corporation NetXtreme II BCM5708 Gigabit Ethernet (rev 12)
+    04:00.0 PCI bridge: Intel Corporation 6311ESB/6321ESB PCI Express Upstream Port (rev 01)
+    04:00.3 PCI bridge: Intel Corporation 6311ESB/6321ESB PCI Express to PCI-X Bridge (rev 01)
+    05:00.0 PCI bridge: Intel Corporation 6311ESB/6321ESB PCI Express Downstream Port E1 (rev 01)
+    05:01.0 PCI bridge: Intel Corporation 6311ESB/6321ESB PCI Express Downstream Port E2 (rev 01)
+    06:00.0 PCI bridge: Broadcom EPB PCI-Express to PCI-X Bridge (rev c3)
+    07:00.0 Ethernet controller: Broadcom Corporation NetXtreme II BCM5708 Gigabit Ethernet (rev 12)
+    0a:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0b:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0b:01.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0b:02.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0b:03.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0e:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0f:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0f:01.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0f:02.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    0f:03.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    10:00.0 3D controller: NVIDIA Corporation GT200GL [Tesla C1060 / M1060] (rev a1)
+    12:00.0 3D controller: NVIDIA Corporation GT200GL [Tesla C1060 / M1060] (rev a1)
+    16:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    17:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    17:01.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    17:02.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    17:03.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    1a:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    1b:00.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    1b:01.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    1b:02.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    1b:03.0 PCI bridge: NVIDIA Corporation NF200 PCIe 2.0 switch for Quadro Plex S4 / Tesla S870 / Tesla S1070 / Tesla S2050 (rev a3)
+    1c:00.0 3D controller: NVIDIA Corporation GT200GL [Tesla C1060 / M1060] (rev a1)
+    1e:00.0 3D controller: NVIDIA Corporation GT200GL [Tesla C1060 / M1060] (rev a1)
+    22:0d.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] ES1000 (rev 02)
 
-7. Let's run `lsmod` to check that the `nvidia` driver has been loaded.
+
+7. Let's run `lsmod` to check that the `nvidia` driver has been loaded. You will see that there is the `radeon` driver also loaded but that's because the Dell server has an on-board AMD/ATI VGA unit.
+
+    $ lsmod | grep nvidia
+    nvidia_uvm             36864  0
+    nvidia              10567680  1 nvidia_uvm
+    drm                   360448  5 ttm,drm_kms_helper,nvidia,radeon
 
 
-    ##TODO: lsmod output
+8. Let's setup some environment variables needed to run the CUDA samples.
 
-8. Now let's run the `deviceQuery` program that is part of the CUDA SDK and make
+    ## setup your .bashrc with the following
+    export CUDA_PATH=/usr/local/cuda
+    export CUDA_SAMPLES_PATH=/usr/local/cuda/samples/bin/x86_64/linux/release
+    export LD_LIBRARY_PATH=$CUDA_PATH/lib64:/usr/local/lib:$LD_LIBRARY_PATH
+    export PATH=$CUDA_PATH/bin:$PATH:$CUDA_SAMPLES_PATH
+
+9. Start a new `bash` shell and verify that the paths have been set.
+
+    $ env | grep CUDA
+    CUDA_PATH=/usr/local/cuda
+    CUDA_SAMPLES_PATH=/usr/local/cuda/samples/bin/x86_64/linux/release
+
+    $ which nvcc
+    /usr/local/cuda/bin/nvcc
+
+    $ which deviceQuery
+    /usr/local/cuda/samples/bin/x86_64/linux/release/deviceQuery
+
+    
+10. Now let's run the `deviceQuery` program that is part of the CUDA SDK and make
 sure it is detecting all the GPUs.
 
+    $ deviceQuery
+    /usr/local/cuda/samples/bin/x86_64/linux/release/deviceQuery Starting...
 
-    ##TODO: output of deviceQuery
+    CUDA Device Query (Runtime API) version (CUDART static linking)
+
+    Detected 4 CUDA Capable device(s)
+
+    Device 0: "Tesla T10 Processor"
+    CUDA Driver Version / Runtime Version          6.5 / 6.5
+    CUDA Capability Major/Minor version number:    1.3
+    Total amount of global memory:                 4096 MBytes (4294770688 bytes)
+    (30) Multiprocessors, (  8) CUDA Cores/MP:     240 CUDA Cores
+    GPU Clock rate:                                1440 MHz (1.44 GHz)
+    Memory Clock rate:                             800 Mhz
+    Memory Bus Width:                              512-bit
+    Maximum Texture Dimension Size (x,y,z)         1D=(8192), 2D=(65536, 32768), 3D=(2048, 2048, 2048)
+    Maximum Layered 1D Texture Size, (num) layers  1D=(8192), 512 layers
+    Maximum Layered 2D Texture Size, (num) layers  2D=(8192, 8192), 512 layers
+    Total amount of constant memory:               65536 bytes
+    Total amount of shared memory per block:       16384 bytes
+    Total number of registers available per block: 16384
+    Warp size:                                     32
+    Maximum number of threads per multiprocessor:  1024
+    Maximum number of threads per block:           512
+    Max dimension size of a thread block (x,y,z): (512, 512, 64)
+    Max dimension size of a grid size    (x,y,z): (65535, 65535, 1)
+    Maximum memory pitch:                          2147483647 bytes
+    Texture alignment:                             256 bytes
+    Concurrent copy and kernel execution:          Yes with 1 copy engine(s)
+    Run time limit on kernels:                     No
+    Integrated GPU sharing Host Memory:            No
+    Support host page-locked memory mapping:       Yes
+    Alignment requirement for Surfaces:            Yes
+    Device has ECC support:                        Disabled
+    Device supports Unified Addressing (UVA):      No
+    Device PCI Bus ID / PCI location ID:           16 / 0
+    Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
+    Device 1: "Tesla T10 Processor"
+    CUDA Driver Version / Runtime Version          6.5 / 6.5
+    CUDA Capability Major/Minor version number:    1.3
+    Total amount of global memory:                 4096 MBytes (4294770688 bytes)
+    (30) Multiprocessors, (  8) CUDA Cores/MP:     240 CUDA Cores
+    GPU Clock rate:                                1440 MHz (1.44 GHz)
+    Memory Clock rate:                             800 Mhz
+    Memory Bus Width:                              512-bit
+    Maximum Texture Dimension Size (x,y,z)         1D=(8192), 2D=(65536, 32768), 3D=(2048, 2048, 2048)
+    Maximum Layered 1D Texture Size, (num) layers  1D=(8192), 512 layers
+    Maximum Layered 2D Texture Size, (num) layers  2D=(8192, 8192), 512 layers
+    Total amount of constant memory:               65536 bytes
+    Total amount of shared memory per block:       16384 bytes
+    Total number of registers available per block: 16384
+    Warp size:                                     32
+    Maximum number of threads per multiprocessor:  1024
+    Maximum number of threads per block:           512
+    Max dimension size of a thread block (x,y,z): (512, 512, 64)
+    Max dimension size of a grid size    (x,y,z): (65535, 65535, 1)
+    Maximum memory pitch:                          2147483647 bytes
+    Texture alignment:                             256 bytes
+    Concurrent copy and kernel execution:          Yes with 1 copy engine(s)
+    Run time limit on kernels:                     No
+    Integrated GPU sharing Host Memory:            No
+    Support host page-locked memory mapping:       Yes
+    Alignment requirement for Surfaces:            Yes
+    Device has ECC support:                        Disabled
+    Device supports Unified Addressing (UVA):      No
+    Device PCI Bus ID / PCI location ID:           18 / 0
+    Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
+    Device 2: "Tesla T10 Processor"
+    CUDA Driver Version / Runtime Version          6.5 / 6.5
+    CUDA Capability Major/Minor version number:    1.3
+    Total amount of global memory:                 4096 MBytes (4294770688 bytes)
+    (30) Multiprocessors, (  8) CUDA Cores/MP:     240 CUDA Cores
+    GPU Clock rate:                                1440 MHz (1.44 GHz)
+    Memory Clock rate:                             800 Mhz
+    Memory Bus Width:                              512-bit
+    Maximum Texture Dimension Size (x,y,z)         1D=(8192), 2D=(65536, 32768), 3D=(2048, 2048, 2048)
+    Maximum Layered 1D Texture Size, (num) layers  1D=(8192), 512 layers
+    Maximum Layered 2D Texture Size, (num) layers  2D=(8192, 8192), 512 layers
+    Total amount of constant memory:               65536 bytes
+    Total amount of shared memory per block:       16384 bytes
+    Total number of registers available per block: 16384
+    Warp size:                                     32
+    Maximum number of threads per multiprocessor:  1024
+    Maximum number of threads per block:           512
+    Max dimension size of a thread block (x,y,z): (512, 512, 64)
+    Max dimension size of a grid size    (x,y,z): (65535, 65535, 1)
+    Maximum memory pitch:                          2147483647 bytes
+    Texture alignment:                             256 bytes
+    Concurrent copy and kernel execution:          Yes with 1 copy engine(s)
+    Run time limit on kernels:                     No
+    Integrated GPU sharing Host Memory:            No
+    Support host page-locked memory mapping:       Yes
+    Alignment requirement for Surfaces:            Yes
+    Device has ECC support:                        Disabled
+    Device supports Unified Addressing (UVA):      No
+    Device PCI Bus ID / PCI location ID:           28 / 0
+    Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+    Device 3: "Tesla T10 Processor"
+    CUDA Driver Version / Runtime Version          6.5 / 6.5
+    CUDA Capability Major/Minor version number:    1.3
+    Total amount of global memory:                 4096 MBytes (4294770688 bytes)
+    (30) Multiprocessors, (  8) CUDA Cores/MP:     240 CUDA Cores
+    GPU Clock rate:                                1440 MHz (1.44 GHz)
+    Memory Clock rate:                             800 Mhz
+    Memory Bus Width:                              512-bit
+    Maximum Texture Dimension Size (x,y,z)         1D=(8192), 2D=(65536, 32768), 3D=(2048, 2048, 2048)
+    Maximum Layered 1D Texture Size, (num) layers  1D=(8192), 512 layers
+    Maximum Layered 2D Texture Size, (num) layers  2D=(8192, 8192), 512 layers
+    Total amount of constant memory:               65536 bytes
+    Total amount of shared memory per block:       16384 bytes
+    Total number of registers available per block: 16384
+    Warp size:                                     32
+    Maximum number of threads per multiprocessor:  1024
+    Maximum number of threads per block:           512
+    Max dimension size of a thread block (x,y,z): (512, 512, 64)
+    Max dimension size of a grid size    (x,y,z): (65535, 65535, 1)
+    Maximum memory pitch:                          2147483647 bytes
+    Texture alignment:                             256 bytes
+    Concurrent copy and kernel execution:          Yes with 1 copy engine(s)
+    Run time limit on kernels:                     No
+    Integrated GPU sharing Host Memory:            No
+    Support host page-locked memory mapping:       Yes
+    Alignment requirement for Surfaces:            Yes
+    Device has ECC support:                        Disabled
+    Device supports Unified Addressing (UVA):      No
+    Device PCI Bus ID / PCI location ID:           30 / 0
+    Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
+    deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 6.5, CUDA Runtime Version = 6.5, NumDevs = 4, Device0 = Tesla T10 Processor, Device1 = Tesla T10 Processor, Device2 = Tesla T10 Processor, Device3 = Tesla T10 Processor
+    Result = PASS
+
 
 
 With this we come to the end of the setup of our development HPC cluster. We are
